@@ -12,20 +12,20 @@ const main = async () => {
 
   await db.connect();
 
-  const schema = `
+  const data = `
   INSERT INTO tables (name, description, capacity) VALUES
-  ('Dining Table A', 'A large wooden dining table that seats up to 8 people.', 8),
-  ('Dining Table B', 'A small round dining table perfect for small spaces.', 4),
-  ('Dining Table C', 'A glass-top dining table with a modern design.', 6),
-  ('Dining Table D', 'An expandable dining table with a classic style.', 10),
-  ('Dining Table E', NULL, 2);
+  ('Prizmlje - Stol 1', 'Stol s pogledom.', 8),
+  ('Prizemlje - Stol 2', 'Stol pored šanka.', 4),
+  ('Potkrovlje - Stol 3', 'Jedini stol u potkrovlju.', 6),
+  ('Terasa - Stol 4', 'Najveći stol koji imamo.', 10),
+  ('Terasa - Stol 5', NULL, 2);
   
   INSERT INTO articles (name, description, price, amount_in_storage) VALUES
-  ('Espresso', 'A rich and strong coffee made by forcing hot water through finely ground coffee beans.', 250, 100),
-  ('Latte', 'A coffee drink made with espresso and steamed milk.', 350, 50),
-  ('Cappuccino', 'A coffee drink made with equal parts espresso, steamed milk, and foamed milk.', 300, 75),
-  ('Muffin', 'A freshly baked blueberry muffin.', 200, 30),
-  ('Bagel', 'A toasted bagel with cream cheese.', 150, 40);
+  ('Espresso', 'Čista kava, za najbolji užitak.', 250, 100),
+  ('Latte', 'Kava. Punomasno mlijeko. Bez šlaga.', 350, 50),
+  ('Cappuccino', 'Kava, mlijeko, šlag.', 300, 75),
+  ('Krafna', 'Krafna s čokoladom', 200, 30),
+  ('Bagel', 'Bagel. Bez dodataka.', 150, 40);
   
   INSERT INTO orders (status, table_id) VALUES
   ('pending', 1),
@@ -39,7 +39,7 @@ const main = async () => {
   (3, 4, 4);
 `;
 
-  await db.query(schema);
+  await db.query(data);
 
   await db.end();
 };

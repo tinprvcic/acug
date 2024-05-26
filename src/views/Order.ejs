@@ -61,6 +61,12 @@
         <h3 class="section-title">Naručeni artikli</h3>
 
         <div class="article-list">
+          <% if (!order.articles.length) { %>
+            <div class="articl">
+              <p class="semibold">Nema artikala u ovoj narudžbi.</p>
+            </div>
+          <% } %>
+
           <% order.articles.forEach((a) => { %>
             <div class="article">
               <p>

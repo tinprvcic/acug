@@ -36,14 +36,14 @@ const main = async () => {
           FOREIGN KEY (table_id) REFERENCES tables(id) ON DELETE CASCADE
       );
       
-      CREATE TABLE orders_articles (
-        order_id INTEGER NOT NULL,
-        article_id INTEGER NOT NULL,
-        quantity INTEGER NOT NULL,
-        PRIMARY KEY (order_id, article_id),
-        FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
-        FOREIGN KEY (article_id) REFERENCES articles(id) ON DELETE CASCADE
-    );
+        CREATE TABLE orders_articles (
+          order_id INTEGER NOT NULL,
+          article_id INTEGER NOT NULL,
+          quantity INTEGER NOT NULL,
+          PRIMARY KEY (order_id, article_id),
+          FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
+          FOREIGN KEY (article_id) REFERENCES articles(id) ON DELETE CASCADE
+      );
       `;
 
   await db.query(schema);

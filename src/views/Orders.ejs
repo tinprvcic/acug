@@ -26,7 +26,10 @@
             </h4>
 
             <div class="article-list">
-              <% o.articles.forEach((a) => { %>
+              <% if (!o.articles.length) { %>
+              <p>Nema artikala u ovoj narudžbi.</p>
+              <% } %> <% o.articles.forEach((a) => { %>
+
               <p><%= a.article_name %> x<%= a.quantity %></p>
               <% }); %>
             </div>

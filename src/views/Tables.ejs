@@ -19,7 +19,12 @@
       </div>
 
       <div class="table-list">
-        <% tables.forEach((t) => { %>
+        <% if (!tables.length) { %>
+        <div class="table-list-item">
+          <p>Nije pronađen niti jedan stol.</p>
+        </div>
+
+        <% } %> <% tables.forEach((t) => { %>
         <div class="table-list-item">
           <p><%= t.name %></p>
           <p>Broj mjesta: <%= t.capacity %></p>
