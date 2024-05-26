@@ -1,4 +1,4 @@
-const TablesController = require("../controllers/Table");
+const TablesController = require("../controllers/Tables");
 
 module.exports = (app) => {
   app.get("/tables", TablesController.getTables);

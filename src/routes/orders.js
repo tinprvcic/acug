@@ -1,12 +1,12 @@
-const OrderController = require("../controllers/Order");
+const OrdersController = require("../controllers/Orders");
 
 module.exports = (app) => {
-  app.get("/orders", OrderController.getOrders);
-  app.get("/orders/new", OrderController.createOrder);
-  app.get("/orders/:id", OrderController.getOrder);
-  app.post("/orders/:id", OrderController.updateOrder);
-  app.post("/orders/:id/quantity", OrderController.updateQuantity);
-  app.post("/orders/:id/delete", OrderController.deleteOrder);
-  app.post("/orders/:id/add", OrderController.addArticlesToOrder);
-  app.post("/orders/:id/remove", OrderController.removeArticlesFromOrder);
+  app.get("/orders", OrdersController.getOrders);
+  app.get("/orders/new", OrdersController.createOrder);
+  app.get("/orders/:id", OrdersController.getOrder);
+  app.post("/orders/:id", OrdersController.updateOrder);
+  app.post("/orders/:id/quantity", OrdersController.updateQuantity);
+  app.post("/orders/:id/delete", OrdersController.deleteOrder);
+  app.post("/orders/:id/add", OrdersController.addArticlesToOrder);
+  app.post("/orders/:id/remove", OrdersController.removeArticlesFromOrder);
 };

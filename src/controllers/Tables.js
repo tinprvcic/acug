@@ -1,7 +1,7 @@
 const Table = require("../models/Table");
 
-module.exports = {
-  async getTables(req, res) {
+module.exports = class Tables {
+  static async getTables(req, res) {
     // strip empty query param
     if (req.query.query === "") return res.redirect("/tables");
 
@@ -14,5 +14,5 @@ module.exports = {
       title: "Pregled stolova",
       query: req.query.query || "",
     });
-  },
+  }
 };
