@@ -1,4 +1,5 @@
 const { db } = require("../db");
+const Article = require("./Article");
 const Table = require("./Table");
 
 module.exports = class Order {
@@ -92,6 +93,16 @@ module.exports = class Order {
   }
 
   static async updateQuantity(order_id, article_id, qyt) {
+    if (typeof qyt !== "number" || isNaN(qyt))
+      throw new Error("Neispravan unos. Količina mora biti broj.");
+
+    if (qyt <= 0)
+      throw new Error("Neispravan unos. Količina mora biti pozitivan broj");
+
+    if (!(await Article.hasEnough(article_id, qyt))) {
+      throw new Error("Nema dovoljno artikla na zalihi.");
+    }
+
     await db.query(
       "update orders_articles set quantity = $1 where order_id = $2 and article_id = $3;",
       [qyt, order_id, article_id]
@@ -101,6 +112,15 @@ module.exports = class Order {
   }
 
   static async add(order_id, article_id, qyt) {
+    if (typeof qyt !== "number" || isNaN(qyt))
+      throw new Error("Neispravan unos. Količina mora biti broj.");
+
+    if (qyt <= 0)
+      throw new Error("Neispravan unos. Količina mora biti pozitivan broj");
+
+    if (!(await Article.hasEnough(article_id, qyt)))
+      throw new Error("Nema dovoljno artikla na zalihi.");
+
     const res = (
       await db.query(
         "select * from orders_articles where order_id = $1 and article_id = $2;",

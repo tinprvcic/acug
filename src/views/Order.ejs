@@ -11,6 +11,12 @@
     <div class="main-content">
       <div class="title-row">
         <h1>Narudžba #<%= order.order_id %></h1>
+        
+        <% if (err) { %>
+        <div class="err">
+          <p><%= err %></p>
+        </div>
+        <% } %>
 
         <form action="/orders/<%= order.order_id  %>/delete" method="post" ><input type="submit" value="Obriši narudžbu"></form>
       </div>
@@ -57,7 +63,7 @@
                 <input type="submit" value="Ukloni">
               </form>
                 <div id="<%= a.article_id %>">
-                <input type="button" value="Uredi" onclick="replaceArticleWidthEditable(<%= order.order_id %>,<%= a.article_id %>);">
+                <input type="button" value="Uredi" onclick="replaceArticleWidthEditable(<%= order.order_id %>,<%= a.article_id %>,<%= a.quantity %>);">
                 </div>
               <% }); %>
               </div>
@@ -84,10 +90,10 @@
     </div>
     
     <script>
-      function replaceArticleWidthEditable(order_id, id) {
+      function replaceArticleWidthEditable(order_id, id, initial_qyt) {
         const html = `
           <form action="/orders/${order_id}/quantity" method="post">
-            Nova kol.<input type="number" value="0" name="qyt"/>
+            Nova kol.<input type="number" value="${initial_qyt}" name="qyt"/>
             <input type="hidden" name="article" value="${id}" />
             <input type="submit" value="Spremi" />
           </form>

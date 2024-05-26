@@ -20,7 +20,13 @@ module.exports = class Orders {
     const tables = await Table.getAll();
     const articles = await Article.getAll();
 
-    res.render("order", { title: "Nova narudžba", order, tables, articles });
+    res.render("order", {
+      title: "Nova narudžba",
+      order,
+      tables,
+      articles,
+      err: req.query.err,
+    });
   }
 
   static async updateOrder(req, res) {
@@ -40,17 +46,28 @@ module.exports = class Orders {
   static async updateQuantity(req, res) {
     const order_id = req.params.id;
 
-    Order.updateQuantity(order_id, req.body.article, req.body.qyt);
+    try {
+      await Order.updateQuantity(
+        order_id,
+        req.body.article,
+        Number(req.body.qyt)
+      );
 
-    res.redirect(`/orders/${order_id}`);
+      res.redirect(`/orders/${order_id}`);
+    } catch (e) {
+      res.redirect(`/orders/${order_id}?err=${encodeURIComponent(e.message)}`);
+    }
   }
 
   static async addArticlesToOrder(req, res) {
     const order_id = req.params.id;
 
-    Order.add(order_id, req.body.article, req.body.qyt);
-
-    res.redirect(`/orders/${order_id}`);
+    try {
+      await Order.add(order_id, req.body.article, Number(req.body.qyt));
+      res.redirect(`/orders/${order_id}`);
+    } catch (e) {
+      res.redirect(`/orders/${order_id}?err=${encodeURIComponent(e.message)}`);
+    }
   }
 
   static async removeArticlesFromOrder(req, res) {
