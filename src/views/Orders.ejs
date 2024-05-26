@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./shared/head') -%>
+    <link rel="stylesheet" href="orders.css" />
+  </head>
+
+  <body>
+    <%- include('./shared/nav_header') -%>
+
+    <div class="main-content">
+      <h1>Nardužbe</h1>
+
+      <div class="order-list">
+        <% orders.forEach((o) => { %>
+        <div class="order-list-item">
+          <div>
+            <h4>Narudžba #<%= o.order_id %></h4>
+            <div class="article-list">
+              <% o.articles.forEach((a) => { %>
+              <p><%= a.article_name %> x<%= a.quantity %></p>
+              <% }); %>
+            </div>
+          </div>
+
+          <div class="order-list-item-right">
+            <p class="order-list-item-status">
+              <%= o.status === "canceled" ? "Otkazana" : o.status === "pending"
+              ? "Neispunjena" : "Isporučena" %>
+            </p>
+
+            <p class="order-list-item-price">
+              <%= (o.articles.reduce((acc, a) => acc + (a.article_price *
+              a.quantity), 0) / 100).toFixed(2) %>&#8364;
+            </p>
+          </div>
+        </div>
+        <% }); %>
+      </div>
+    </div>
+  </body>
+</html>

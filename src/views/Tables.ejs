@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./shared/head') -%>
+    <link rel="stylesheet" href="tables.css" />
+  </head>
+
+  <body>
+    <%- include('./shared/nav_header') -%>
+
+    <div class="main-content">
+      <div class="title-row">
+        <h1>Stolovi</h1>
+
+        <form action="/tables" method="get">
+          <input type="text" name="query" id="query" value="<%= query %>" />
+          <input type="submit" value="Pretraži" />
+        </form>
+      </div>
+
+      <div class="table-list">
+        <% tables.forEach((t) => { %>
+        <div class="table-list-item">
+          <p><%= t.name %></p>
+          <p>Broj mjesta: <%= t.capacity %></p>
+        </div>
+        <% }); %>
+      </div>
+    </div>
+  </body>
+</html>
