@@ -2,20 +2,29 @@
 <html lang="en">
   <head>
     <%- include('./shared/head') -%>
-    <link rel="stylesheet" href="orders.css" />
+    <link rel="stylesheet" href="/orders.css" />
   </head>
 
   <body>
     <%- include('./shared/nav_header') -%>
 
     <div class="main-content">
-      <h1>Nardužbe</h1>
+      <div class="title-row">
+        <h1>Nardužbe</h1>
+
+        <a href="/orders/new"> Stvori novu narudžbu </a>
+      </div>
 
       <div class="order-list">
         <% orders.forEach((o) => { %>
         <div class="order-list-item">
           <div>
-            <h4>Narudžba #<%= o.order_id %></h4>
+            <h4>
+              <a href="/orders/<%= o.order_id %>">
+                Narudžba #<%= o.order_id %>
+              </a>
+            </h4>
+
             <div class="article-list">
               <% o.articles.forEach((a) => { %>
               <p><%= a.article_name %> x<%= a.quantity %></p>

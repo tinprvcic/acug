@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const path = require("path");
 const http = require("http");
+var bodyParser = require("body-parser");
 
 const express = require("express");
 
@@ -15,6 +16,7 @@ async function main() {
   app.set("view engine", "ejs");
 
   app.use(express.static(path.join(__dirname, "public")));
+  app.use(bodyParser.urlencoded({ extended: true }));
 
   await connect_db();
   orders_route(app);
