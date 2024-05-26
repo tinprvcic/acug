@@ -1,6 +1,7 @@
 const OrdersController = require("../controllers/Orders");
 
 module.exports = (app) => {
+  app.get("/", OrdersController.redirectToOrders);
   app.get("/orders", OrdersController.getOrders);
   app.get("/orders/new", OrdersController.createOrder);
   app.get("/orders/:id", OrdersController.getOrder);

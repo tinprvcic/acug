@@ -3,6 +3,10 @@ const Table = require("../models/Table");
 const Article = require("../models/Article");
 
 module.exports = class Orders {
+  static async redirectToOrders(_req, res) {
+    res.redirect("/orders");
+  }
+
   static async getOrders(_req, res) {
     const orders = await Order.getAll();
 

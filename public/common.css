@@ -64,3 +64,60 @@ body {
   display: flex;
   justify-content: space-between;
 }
+
+input,
+select {
+  padding: 8px;
+  font-size: 16px;
+  background-color: white;
+  border: 1px solid #cecece;
+  border-radius: 8px;
+}
+
+input[type="button"],
+button,
+input[type="submit"] {
+  cursor: pointer;
+  padding: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: #efefef;
+  border: 1px solid #cecece;
+  border-radius: 8px;
+}
+
+input[type="button"]:hover,
+button:hover,
+input[type="submit"]:hover {
+  background-color: #cecece;
+}
+
+input[type="number"] {
+  width: 60px;
+}
+
+.success {
+  margin-top: 16px;
+  background-color: #c1e7f7;
+  padding: 16px;
+  align-self: stretch;
+  border-radius: 18px;
+  border: 1px solid #8aaebd;
+}
+
+.err {
+  margin-top: 16px;
+  background-color: #c94b70;
+  padding: 16px;
+  align-self: stretch;
+  border-radius: 18px;
+  border: 1px solid #a63355;
+}
+
+.err p {
+  color: white;
+}
+
+.semibold {
+  font-weight: 600;
+}

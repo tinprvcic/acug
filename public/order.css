@@ -2,8 +2,7 @@
   margin-top: 16px;
 
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  align-items: flex-end;
   gap: 12px;
 }
 
@@ -12,4 +11,52 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 4px;
+}
+
+.form-buttons {
+  gap: 16px;
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.section {
+  padding-top: 16px;
+  border-top: 1px solid #888;
+  margin-top: 32px;
+}
+
+.section-title {
+  margin-bottom: 16px;
+}
+
+.article-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.article {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+}
+
+.article:not(:last-child) {
+  border-bottom: 1px solid #cecece;
+}
+
+.article-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.dynamic-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: flex-end;
+  width: 140px;
 }
