@@ -14,8 +14,10 @@
         <h1><%= table.name %></h1>
       </div>
 
-      <p>Ovaj stol trenutno nema aktivnu narudžbu.</p>
-      <p><a href="<%= `/tables/${table.id}/new` %>">Stvori novu narudžbu</a></p>
+      <p class="mt-12">Ovaj stol trenutno nema aktivnu narudžbu.</p>
+      <p class="mt-12">
+        <a href="<%= `/tables/${table.id}/new` %>">Stvori novu narudžbu</a>
+      </p>
     </div>
   </body>
 </html>

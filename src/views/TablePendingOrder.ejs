@@ -19,7 +19,11 @@
 
       <div class="form">
         <div class="form-item">
-          <p><%= `Status: ${order.status}` %></p>
+          <p>
+            <%= `Status: ${order.status === "pending" ? "Na čekanju" :
+            order.status === "delivered" ? "Isporučeno" : "accepted" :
+            "Prihvaćeno"}` %>
+          </p>
         </div>
       </div>
 
