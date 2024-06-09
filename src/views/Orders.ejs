@@ -18,6 +18,7 @@
         <div class="order-list-item">
           <div>
             <h4>Narudžba #<%= o.order_id %></h4>
+            <p class="small-text"><%=o.table_name %></p>
 
             <div class="article-list">
               <% if (!o.articles.length) { %>

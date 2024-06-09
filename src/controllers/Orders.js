@@ -1,6 +1,4 @@
 const Order = require("../models/Order");
-const Table = require("../models/Table");
-const Article = require("../models/Article");
 const OrderService = require("../services/Order");
 
 module.exports = class Orders {
@@ -12,26 +10,6 @@ module.exports = class Orders {
     const orders = await Order.getAll();
 
     res.render("orders", { title: "Pregled narudžbi", orders });
-  }
-
-  static async createOrder(_req, res) {
-    const id = await Order.create();
-
-    res.redirect(`/orders/${id}`);
-  }
-
-  static async getOrder(req, res) {
-    const order = await Order.get(req.params.id);
-    const tables = await Table.getAll();
-    const articles = await Article.getAll();
-
-    res.render("order", {
-      title: "Nova narudžba",
-      order,
-      tables,
-      articles,
-      err: req.query.err,
-    });
   }
 
   static async saveOrder(req, res) {

@@ -28,6 +28,11 @@
   gap: 4px;
 }
 
+.small-text {
+  color: #888;
+  font-size: 14px;
+}
+
 .article-list p {
   color: #888;
   font-size: 14px;

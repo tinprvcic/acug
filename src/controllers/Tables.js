@@ -30,7 +30,7 @@ module.exports = class Tables {
 
     if (draftOrder)
       return res.render("tabledraftorder", {
-        title: "Nova narudžba",
+        title: table.name,
         table,
         order: draftOrder,
         articles,
@@ -46,7 +46,8 @@ module.exports = class Tables {
 
     if (activeOrder)
       return res.render("tablependingorder", {
-        title: "Nova narudžba",
+        title: table.name,
+        table,
         order: activeOrder,
         articles,
         err: req.query.err,

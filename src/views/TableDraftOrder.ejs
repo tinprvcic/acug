@@ -9,7 +9,7 @@
     <%- include('./shared/nav_header') -%>
 
     <div class="main-content">
-      <h1>Narudžba #<%= order.order_id %></h1>
+      <h1><%= table.name %></h1>
 
       <% if (err) { %>
       <div class="err">
@@ -18,6 +18,9 @@
       <% } %>
 
       <div class="form">
+        <div class="form-item">
+          <h4>Narudžba #<%= order.order_id %></h4>
+        </div>
         <div class="form-buttons">
           <form action="/orders/<%= order.order_id %>" method="post">
             <input type="hidden" name="tableId" value="<%= table.id %>" />
