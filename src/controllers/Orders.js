@@ -33,18 +33,20 @@ module.exports = class Orders {
     });
   }
 
-  static async updateOrder(req, res) {
+  static async saveOrder(req, res) {
     const order_id = req.params.id;
 
-    await Order.update(order_id, req.body.status, req.body.table);
+    await Order.save(order_id, req.body.status, req.body.table);
 
-    res.redirect(`/orders/${order_id}`);
+    res.redirect(`/tables/${req.body.tableId}`);
   }
 
   static async deleteOrder(req, res) {
     await Order.delete(req.params.id);
 
-    res.redirect(`/orders`);
+    console.log("tableId", req.body);
+
+    res.redirect(`/tables/${req.body.tableId}`);
   }
 
   static async updateQuantity(req, res) {
@@ -57,9 +59,11 @@ module.exports = class Orders {
         Number(req.body.qyt)
       );
 
-      res.redirect(`/orders/${order_id}`);
+      res.redirect(`/tables/${req.body.tableId}`);
     } catch (e) {
-      res.redirect(`/orders/${order_id}?err=${encodeURIComponent(e.message)}`);
+      res.redirect(
+        `/tables/${req.body.tableId}?err=${encodeURIComponent(e.message)}`
+      );
     }
   }
 
@@ -68,9 +72,11 @@ module.exports = class Orders {
 
     try {
       await Order.add(order_id, req.body.article, Number(req.body.qyt));
-      res.redirect(`/orders/${order_id}`);
+      res.redirect(`/tables/${req.body.tableId}`);
     } catch (e) {
-      res.redirect(`/orders/${order_id}?err=${encodeURIComponent(e.message)}`);
+      res.redirect(
+        `/tables/${req.body.tableId}?err=${encodeURIComponent(e.message)}`
+      );
     }
   }
 
@@ -79,7 +85,7 @@ module.exports = class Orders {
 
     Order.remove(order_id, req.body.article);
 
-    res.redirect(`/orders/${order_id}`);
+    res.redirect(`/tables/${req.body.tableId}`);
   }
 
   static async takeOrder(req, res) {

@@ -26,7 +26,7 @@
 
         <% } %> <% tables.forEach((t) => { %>
         <div class="table-list-item">
-          <p><%= t.name %></p>
+          <p><a href="<%= `/tables/${t.id}` %>"><%= t.name %></a></p>
           <p>Broj mjesta: <%= t.capacity %></p>
         </div>
         <% }); %>

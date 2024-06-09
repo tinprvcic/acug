@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./shared/head') -%>
+    <link rel="stylesheet" href="/order.css" />
+    <link rel="stylesheet" href="/orders.css" />
+  </head>
+
+  <body>
+    <%- include('./shared/nav_header') -%>
+
+    <div class="main-content">
+      <div class="title-row">
+        <h1><%= table.name %></h1>
+      </div>
+
+      <p>Ovaj stol trenutno nema aktivnu narudžbu.</p>
+      <p><a href="<%= `/tables/${table.id}/new` %>">Stvori novu narudžbu</a></p>
+    </div>
+  </body>
+</html>

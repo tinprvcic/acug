@@ -11,19 +11,13 @@
     <div class="main-content">
       <div class="title-row">
         <h1>Nardužbe</h1>
-
-        <a href="/orders/new"> Stvori novu narudžbu </a>
       </div>
 
       <div class="order-list">
         <% orders.forEach((o) => { %>
         <div class="order-list-item">
           <div>
-            <h4>
-              <a href="/orders/<%= o.order_id %>">
-                Narudžba #<%= o.order_id %>
-              </a>
-            </h4>
+            <h4>Narudžba #<%= o.order_id %></h4>
 
             <div class="article-list">
               <% if (!o.articles.length) { %>
@@ -36,23 +30,29 @@
           </div>
 
           <div class="order-list-item-right">
-            <p class="order-list-item-status">
-              <%= o.status === "canceled" ? "Otkazana" : o.status === "pending"
-              ? "Neispunjena" : "Isporučena" %>
-            </p>
-
-            <% if (o.status === "pending") { %>
-            <form action="<%= `/orders/${o.order_id}/take` %>" method="post">
-              <input type="submit" value="Preuzmi" />
+            <% if (o.status === "paid") { %>
+            <p class="order-list-item-status">Plaćeno</p>
+            <% } %> <% if (o.status === "pending") { %>
+            <form
+              action="<%= `/orders/${o.order_id}/take` %>"
+              method="post"
+              class="mb-12"
+            >
+              <input type="submit" value="Prihvati" />
             </form>
             <% } %> <% if (o.status === "accepted") { %>
-            <form action="<%= `/orders/${o.order_id}/deliver` %>" method="post">
+            <form
+              action="<%= `/orders/${o.order_id}/deliver` %>"
+              method="post"
+              class="mb-12"
+            >
               <input type="submit" value="Označi kao isporučeno" />
             </form>
             <% } %> <% if (o.status === "delivered") { %>
             <form
               action="<%= `/orders/${o.order_id}/markPaid` %>"
               method="post"
+              class="mb-12"
             >
               <input type="submit" value="Označi kao plaćeno" />
             </form>

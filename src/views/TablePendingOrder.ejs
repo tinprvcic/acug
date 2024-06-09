@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./shared/head') -%>
+    <link rel="stylesheet" href="/order.css" />
+  </head>
+
+  <body>
+    <%- include('./shared/nav_header') -%>
+
+    <div class="main-content">
+      <h1>Narudžba #<%= order.order_id %></h1>
+
+      <% if (err) { %>
+      <div class="err">
+        <p><%= err %></p>
+      </div>
+      <% } %>
+
+      <div class="form">
+        <div class="form-item">
+          <p><%= `Status: ${order.status}` %></p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3 class="section-title">Naručeni artikli</h3>
+
+        <div class="article-list">
+          <% if (!order.articles.length) { %>
+          <div class="articl">
+            <p class="semibold">Nema artikala u ovoj narudžbi.</p>
+          </div>
+          <% } %> <% order.articles.forEach((a) => { %>
+          <div class="article">
+            <p><%= a.article_name %></p>
+
+            <div class="article-right">
+              <p><%= (a.article_price / 100).toFixed(2) %>&#8364;/kom.</p>
+
+              <div id="<%= a.article_id %>" class="dynamic-container">
+                <p><%=a.quantity %> kom.</p>
+              </div>
+            </div>
+          </div>
+          <% }); %>
+
+          <div class="article">
+            <p class="semibold">
+              Ukupno: <%= (order.articles.reduce((acc, a) => acc +
+              (a.article_price * a.quantity), 0) / 100).toFixed(2) %>&#8364;
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

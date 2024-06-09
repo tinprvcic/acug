@@ -14,7 +14,8 @@ module.exports = class Table {
   }
 
   static async get(id) {
-    return (await db.query("select * from tables where id = $1;", [id])).rows;
+    return (await db.query("select * from tables where id = $1;", [id]))
+      .rows[0];
   }
 
   static async create(tableName, description, capacity) {

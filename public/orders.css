@@ -42,7 +42,11 @@
 
 .order-list-item-status {
   font-weight: bold;
-  font-size: 14px;
+  font-size: 16px;
+}
+
+.mb-12 {
+  margin-bottom: 12px;
 }
 
 .order-list-item-price {

@@ -27,6 +27,7 @@ module.exports = class Order {
       FROM orders o JOIN tables t ON o.table_id = t.id 
         LEFT JOIN orders_articles oa ON o.id = oa.order_id
         LEFT JOIN articles a ON oa.article_id = a.id
+      where o.status != 'draft'
       GROUP BY o.id, t.name, t.description, t.capacity
       ORDER BY o.order_time desc;`)
     ).rows;
@@ -68,15 +69,49 @@ module.exports = class Order {
     ).rows[0];
   }
 
-  static async create() {
-    const tables = await Table.getAll();
+  static async getOnTable(tableId) {
+    return (
+      await db.query(
+        `
+      SELECT
+      o.id AS order_id,
+      o.order_time,
+      o.status,
+      o.cam_id,
+      o.cam_def_id,
+      t.id AS table_id,
+      t.name AS table_name,
+      t.description AS table_description,
+      t.capacity AS table_capacity,
+      COALESCE(
+              json_agg(
+                  json_build_object(
+                      'article_id', a.id,
+                      'article_name', a.name,
+                      'article_description', a.description,
+                      'article_price', a.price,
+                      'quantity', oa.quantity
+                  )
+              ) FILTER (WHERE a.id IS NOT NULL), '[]'
+          ) AS articles
+      FROM orders o JOIN tables t ON o.table_id = t.id 
+        LEFT JOIN orders_articles oa ON o.id = oa.order_id
+        LEFT JOIN articles a ON oa.article_id = a.id
+      WHERE t.id = $1
+      GROUP BY o.id, t.name, t.description, t.capacity, t.id
+      ORDER BY o.order_time desc;`,
+        [tableId]
+      )
+    ).rows;
+  }
 
+  static async create(tableId) {
     const data = await Camunda.createNarudzba();
     console.log("camunda", data);
 
     const res = await db.query(
       "insert into orders (status, table_id, cam_id, cam_def_id) values ('draft', $1, $2, $3) returning id",
-      [tables[0].id, data.id, data.definitionId]
+      [tableId, data.id, data.definitionId]
     );
 
     await Camunda.completeNextTask(data.id);
@@ -84,7 +119,7 @@ module.exports = class Order {
     return res.rows[0].id;
   }
 
-  static async update(order_id, status, table_id) {
+  static async save(order_id, status, table_id) {
     const order = await Order.get(order_id);
 
     await db.query("update orders set status='pending' where id=$1;", [
