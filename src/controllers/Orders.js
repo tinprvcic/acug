@@ -1,6 +1,7 @@
 const Order = require("../models/Order");
 const Table = require("../models/Table");
 const Article = require("../models/Article");
+const OrderService = require("../services/Order");
 
 module.exports = class Orders {
   static async redirectToOrders(_req, res) {
@@ -36,15 +37,13 @@ module.exports = class Orders {
   static async saveOrder(req, res) {
     const order_id = req.params.id;
 
-    await Order.save(order_id, req.body.status, req.body.table);
+    await OrderService.save(order_id, req.body.status, req.body.table);
 
     res.redirect(`/tables/${req.body.tableId}`);
   }
 
   static async deleteOrder(req, res) {
-    await Order.delete(req.params.id);
-
-    console.log("tableId", req.body);
+    await OrderService.delete(req.params.id);
 
     res.redirect(`/tables/${req.body.tableId}`);
   }
@@ -91,7 +90,7 @@ module.exports = class Orders {
   static async takeOrder(req, res) {
     const order_id = req.params.id;
 
-    await Order.take(order_id);
+    await OrderService.take(order_id);
 
     res.redirect("/orders");
   }
@@ -99,7 +98,7 @@ module.exports = class Orders {
   static async deliverOrder(req, res) {
     const order_id = req.params.id;
 
-    await Order.deliver(order_id);
+    await OrderService.deliver(order_id);
 
     res.redirect("/orders");
   }
@@ -107,7 +106,7 @@ module.exports = class Orders {
   static async markOrderPaid(req, res) {
     const order_id = req.params.id;
 
-    await Order.markPaid(order_id);
+    await OrderService.markPaid(order_id);
 
     res.redirect("/orders");
   }

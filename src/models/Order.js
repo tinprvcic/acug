@@ -1,7 +1,5 @@
-const Camunda = require("../Camunda");
 const { db } = require("../db");
 const Article = require("./Article");
-const Table = require("./Table");
 
 module.exports = class Order {
   static async getAll() {
@@ -105,74 +103,39 @@ module.exports = class Order {
     ).rows;
   }
 
-  static async create(tableId) {
-    const data = await Camunda.createNarudzba();
-    console.log("camunda", data);
-
+  static async create(tableId, cam_id, cam_def_id) {
     const res = await db.query(
       "insert into orders (status, table_id, cam_id, cam_def_id) values ('draft', $1, $2, $3) returning id",
-      [tableId, data.id, data.definitionId]
+      [tableId, cam_id, cam_def_id]
     );
-
-    await Camunda.completeNextTask(data.id);
 
     return res.rows[0].id;
   }
 
-  static async save(order_id, status, table_id) {
-    const order = await Order.get(order_id);
-
+  static async save(order_id) {
     await db.query("update orders set status='pending' where id=$1;", [
       order_id,
     ]);
-
-    console.log("order", order.cam_id);
-
-    await Camunda.completeNextTask(order.cam_id, {
-      variables: { giveUp: { value: "no" } },
-    });
-
-    return;
   }
 
   static async take(order_id) {
-    const order = await Order.get(order_id);
-
     await db.query("update orders set status='accepted' where id=$1;", [
       order_id,
     ]);
-
-    await Camunda.sendAcceptOrderMessage(order.cam_id);
   }
 
   static async deliver(order_id) {
-    const order = await Order.get(order_id);
-
     await db.query("update orders set status='delivered' where id=$1;", [
       order_id,
     ]);
-
-    await Camunda.completeNextTask(order.cam_id);
   }
 
   static async markPaid(order_id) {
-    const order = await Order.get(order_id);
-
     await db.query("update orders set status='paid' where id=$1;", [order_id]);
-
-    await Camunda.completeNextTask(order.cam_id);
   }
 
   static async delete(order_id) {
-    const order = await Order.get(order_id);
-
-    await Camunda.completeNextTask(order.cam_id, {
-      variables: { giveUp: { value: "yes" } },
-    });
-
     await db.query("delete from orders where id = $1", [order_id]);
-
-    await Camunda.completeNextTask(order.cam_id);
   }
 
   static async updateQuantity(order_id, article_id, qyt) {

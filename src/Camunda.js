@@ -25,9 +25,12 @@ const fetch_camunda = async (endpoint, options) => {
 
 module.exports = class Camunda {
   static async createNarudzba() {
-    const data = await fetch_camunda("process-definition/key/narudzba5/start", {
-      post: true,
-    });
+    const data = await fetch_camunda(
+      "process-definition/key/narudzba_v6/start",
+      {
+        post: true,
+      }
+    );
 
     return { id: data.id, definitionId: data.definitionId };
   }
@@ -40,8 +43,6 @@ module.exports = class Camunda {
 
   static async completeNextTask(cam_id, data) {
     const { id } = await this.getNextTask(cam_id);
-
-    console.log("dat", id, data);
 
     await fetch_camunda(`task/${id}/complete`, { post: true, data });
   }

@@ -1,6 +1,7 @@
 const Article = require("../models/Article");
 const Order = require("../models/Order");
 const Table = require("../models/Table");
+const OrderService = require("../services/Order");
 
 module.exports = class Tables {
   static async getTables(req, res) {
@@ -57,7 +58,7 @@ module.exports = class Tables {
   static async newOrderOnTable(req, res) {
     const tableId = req.params.id;
 
-    await Order.create(tableId);
+    await OrderService.create(tableId);
 
     res.redirect(`/tables/${tableId}`);
   }
