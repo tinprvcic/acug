@@ -81,4 +81,28 @@ module.exports = class Orders {
 
     res.redirect(`/orders/${order_id}`);
   }
+
+  static async takeOrder(req, res) {
+    const order_id = req.params.id;
+
+    await Order.take(order_id);
+
+    res.redirect("/orders");
+  }
+
+  static async deliverOrder(req, res) {
+    const order_id = req.params.id;
+
+    await Order.deliver(order_id);
+
+    res.redirect("/orders");
+  }
+
+  static async markOrderPaid(req, res) {
+    const order_id = req.params.id;
+
+    await Order.markPaid(order_id);
+
+    res.redirect("/orders");
+  }
 };

@@ -31,7 +31,9 @@ const main = async () => {
         CREATE TABLE orders (
           id SERIAL PRIMARY KEY,
           order_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          status VARCHAR(10) NOT NULL CHECK (status IN ('delivered', 'pending', 'canceled')),
+          status VARCHAR(10) NOT NULL CHECK (status IN ('draft', 'pending', 'accepted', 'delivered', 'paid')),
+          cam_id TEXT,
+          cam_def_id TEXT,
           table_id INTEGER NOT NULL,
           FOREIGN KEY (table_id) REFERENCES tables(id) ON DELETE CASCADE
       );

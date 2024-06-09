@@ -26,17 +26,6 @@ const main = async () => {
   ('Cappuccino', 'Kava, mlijeko, šlag.', 300, 75),
   ('Krafna', 'Krafna s čokoladom', 200, 30),
   ('Bagel', 'Bagel. Bez dodataka.', 150, 40);
-  
-  INSERT INTO orders (status, table_id) VALUES
-  ('pending', 1),
-  ('delivered', 2),
-  ('canceled', 3);
-
-  INSERT INTO orders_articles (order_id, article_id, quantity) VALUES
-  (1, 1, 2),
-  (1, 2, 1),
-  (2, 3, 3),
-  (3, 4, 4);
 `;
 
   await db.query(data);

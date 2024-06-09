@@ -41,6 +41,23 @@
               ? "Neispunjena" : "Isporučena" %>
             </p>
 
+            <% if (o.status === "pending") { %>
+            <form action="<%= `/orders/${o.order_id}/take` %>" method="post">
+              <input type="submit" value="Preuzmi" />
+            </form>
+            <% } %> <% if (o.status === "accepted") { %>
+            <form action="<%= `/orders/${o.order_id}/deliver` %>" method="post">
+              <input type="submit" value="Označi kao isporučeno" />
+            </form>
+            <% } %> <% if (o.status === "delivered") { %>
+            <form
+              action="<%= `/orders/${o.order_id}/markPaid` %>"
+              method="post"
+            >
+              <input type="submit" value="Označi kao plaćeno" />
+            </form>
+            <% } %>
+
             <p class="order-list-item-price">
               <%= (o.articles.reduce((acc, a) => acc + (a.article_price *
               a.quantity), 0) / 100).toFixed(2) %>&#8364;
